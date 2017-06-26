@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MotoGP calendar importer</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="splash_message">Retrieving events</string>
+    <string name="select_categories">Select categories</string>
+    <string name="events_loaded">Events loaded to the calendar</string>
+    <string name="loading_events">Events loading</string>
+    <string name="no_category_validation_msg">No category selected</string>
+    <string name="delay_validation_msg">Delay is empty</string>
+    <string name="calendar_events_creation_error">Error during calendar events creation</string>
+    <string name="select_calendar_to_add_entries">Select calendar to add entries</string>
+</resources>
