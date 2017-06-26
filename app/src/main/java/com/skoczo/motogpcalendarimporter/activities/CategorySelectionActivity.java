@@ -67,8 +67,8 @@ public class CategorySelectionActivity extends AppCompatActivity {
         calAdapter = new CalendarAdapter(this, calendars);
 
         events = (ArrayList<MotoEvent>) getIntent().getExtras().get("events");
-        calendarsList = (ListView) findViewById(R.id.calendars);
-        calendarsList.setAdapter(calAdapter);
+//        calendarsList = (ListView) findViewById(R.id.calendars);
+//        calendarsList.setAdapter(calAdapter);
 
         events = filterEventsToLoad(events);
         FloatingActionButton generate = (FloatingActionButton) findViewById(R.id.generate_events);
