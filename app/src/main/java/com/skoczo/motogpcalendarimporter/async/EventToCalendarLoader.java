@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.skoczo.motogpcalendarimporter.ErrorSupport;
+import com.skoczo.motogpcalendarimporter.R;
 import com.skoczo.motogpcalendarimporter.entities.MotoEvent;
 
 import org.jsoup.Jsoup;
@@ -51,7 +52,7 @@ public class EventToCalendarLoader extends AsyncTask {
                     // Date currentDay = (Date) e.getDate().clone();
                     Calendar currentDayCal = Calendar.getInstance();
                     currentDayCal.setTime(e.getDate());
-                    currentDayCal.add(Calendar.DAY_OF_MONTH,  (dayCount+1) - raceDays.size());
+                    currentDayCal.add(Calendar.DAY_OF_MONTH, (dayCount + 1) - raceDays.size());
 
                     Elements raceDayEvents = raceDay.getElementsByClass("c-schedule__table-row");
                     for (int eventCount = 0; eventCount < raceDayEvents.size(); eventCount++) {
@@ -68,7 +69,7 @@ public class EventToCalendarLoader extends AsyncTask {
                             String[] startHours = startEnd[0].split(":");
 
                             String[] endHours = null;
-                            if(startEnd.length > 1) {
+                            if (startEnd.length > 1) {
                                 endHours = startEnd[1].split(":");
                             }
 
@@ -77,8 +78,8 @@ public class EventToCalendarLoader extends AsyncTask {
 
                             Date startDate = currentDayCal.getTime();
 
-                            if(endHours == null) {
-                                currentDayCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHours[0])+2);
+                            if (endHours == null) {
+                                currentDayCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHours[0]) + 2);
                                 currentDayCal.set(Calendar.MINUTE, Integer.parseInt(startHours[1]));
                             } else {
                                 currentDayCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(endHours[0]));
@@ -95,10 +96,8 @@ public class EventToCalendarLoader extends AsyncTask {
 
                 progDial.setProgress(++i);
             }
-//            Log.i(EventToCalendarLoader.class.getName(), Calendar.getInstance().getTimeZone().getID());
-//            pushAppointmentsToCalender(activity, "title", "info", "place", 1, Calendar.getInstance().getTime().getTime(), 15);
         } catch (Exception e) {
-            // TODO error
+            Toast.makeText(activity.getApplicationContext(), R.string.event_add_error_msg, Toast.LENGTH_LONG).show();
             ErrorSupport.error("Error during appintment add", e);
             return false;
         } finally {
@@ -108,7 +107,7 @@ public class EventToCalendarLoader extends AsyncTask {
         ((Activity) params[1]).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(activity.getApplicationContext(), "Events loaded succesfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity.getApplicationContext(), R.string.event_add_success_msg, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -116,44 +115,20 @@ public class EventToCalendarLoader extends AsyncTask {
         return true;
     }
 
-    public static long pushAppointmentsToCalender(Activity curActivity, String title, String addInfo, String place, long startDate,long endDate, int reminder) {
-        /***************** Event: note(without alert) *******************/
-
+    public static long pushAppointmentsToCalender(Activity curActivity, String title, String addInfo, String place, long startDate, long endDate, int reminder) {
         String eventUriString = "content://com.android.calendar/events";
         ContentValues eventValues = new ContentValues();
 
-        eventValues.put("calendar_id", 1); // id, We need to choose from
-        // our mobile for primary
-        // its 1
+        eventValues.put("calendar_id", 1);
         eventValues.put("title", title);
         eventValues.put("description", addInfo);
         eventValues.put("eventLocation", place);
-
-//        long endDate = startDate + 1000 * 60 * 60; // For next 1hr
-
         eventValues.put("dtstart", startDate);
         eventValues.put("dtend", endDate);
-
-        // values.put("allDay", 1); //If it is bithday alarm or such
-        // kind (which should remind me for whole day) 0 for false, 1
-        // for true
-        eventValues.put("eventStatus", 1); // This information is
-        // sufficient for most
-        // entries tentative (0),
-        // confirmed (1) or canceled
-        // (2):
+        eventValues.put("eventStatus", 1);
 
         eventValues.put("eventTimezone", Calendar.getInstance().getTimeZone().getID());
-   /*Comment below visibility and transparency  column to avoid java.lang.IllegalArgumentException column visibility is invalid error */
 
-    /*eventValues.put("visibility", 3); // visibility to default (0),
-                                        // confidential (1), private
-                                        // (2), or public (3):
-    eventValues.put("transparency", 0); // You can control whether
-                                        // an event consumes time
-                                        // opaque (0) or transparent
-                                        // (1).
-      */
         eventValues.put("hasAlarm", 1); // 0 for false, 1 for true
 
         Uri eventUri = curActivity.getApplicationContext().getContentResolver().insert(Uri.parse(eventUriString), eventValues);
@@ -166,12 +141,8 @@ public class EventToCalendarLoader extends AsyncTask {
         ContentValues reminderValues = new ContentValues();
 
         reminderValues.put("event_id", eventID);
-        reminderValues.put("minutes", reminder); // Default value of the
-        // system. Minutes is a
-        // integer
-        reminderValues.put("method", 1); // Alert Methods: Default(0),
-        // Alert(1), Email(2),
-        // SMS(3)
+        reminderValues.put("minutes", reminder);
+        reminderValues.put("method", 1);
 
         Uri reminderUri = curActivity.getApplicationContext().getContentResolver().insert(Uri.parse(reminderUriString), reminderValues);
 

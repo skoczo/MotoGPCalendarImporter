@@ -48,8 +48,7 @@ public class GetEventsTask extends AsyncTask {
 
             return eventsList;
         } catch (Exception e) {
-            // TODO
-            ErrorSupport.error("Error during event creation: " + e.getMessage(), e);
+            ErrorSupport.error("Error during event build: " + e.getMessage(), e);
         }
 
 

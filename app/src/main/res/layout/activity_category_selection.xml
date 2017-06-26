@@ -125,20 +125,20 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="15dp"
-                    android:text="@string/select_calendar_to_add_entries"
-                    android:textSize="24sp" />
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:paddingBottom="15dp"-->
+                    <!--android:text="@string/select_calendar_to_add_entries"-->
+                    <!--android:textSize="24sp" />-->
 
-                <ListView
-                    android:id="@+id/calendars"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<ListView-->
+                    <!--android:id="@+id/calendars"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                </ListView>
+                <!--</ListView>-->
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

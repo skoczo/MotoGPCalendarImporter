@@ -8,4 +8,9 @@
     <string name="no_category_validation_msg">Nie wybrano kategorii</string>
     <string name="delay_validation_msg">Wartość opóźnienia pusta</string>
     <string name="calendar_events_creation_error">Błąd podczas ładowania wydarzeń</string>
+    <string name="select_calendar_to_add_entries">Wybierz kalendarz</string>
+    <string name="event_add_error_msg">Błąd podczas dodawania wydarzeń do kalendarza</string>
+    <string name="event_add_success_msg">Wydarzenia dodane poprawnie</string>
+    <string name="cant_connect_to_the_page">Nie mogę połączyć się ze stroną</string>
+    <string name="event_build_error">Nie udało się zbudować eventa</string>
 </resources>

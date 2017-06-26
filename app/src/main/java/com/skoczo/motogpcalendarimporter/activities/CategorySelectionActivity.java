@@ -110,8 +110,6 @@ public class CategorySelectionActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-//                pushAppointmentsToCalender(CategorySelectionActivity.this, "title", "info", "place", 1, Calendar.getInstance().getTime().getTime());
             }
         });
     }

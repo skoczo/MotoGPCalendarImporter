@@ -9,4 +9,8 @@
     <string name="delay_validation_msg">Delay is empty</string>
     <string name="calendar_events_creation_error">Error during calendar events creation</string>
     <string name="select_calendar_to_add_entries">Select calendar to add entries</string>
+    <string name="event_add_error_msg">Can\'t add all events to calendar</string>
+    <string name="event_add_success_msg">Events loaded succesfully</string>
+    <string name="cant_connect_to_the_page">Can\'t download races</string>
+    <string name="event_build_error">Can\'t build events</string>
 </resources>

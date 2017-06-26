@@ -9,7 +9,7 @@ import android.util.Log;
 public class ErrorSupport {
 
     public static void error(String msg, Exception e) {
-        Log.e(ErrorSupport.class.getName(), msg,e);
+        Log.e(ErrorSupport.class.getName(), msg, e);
     }
 
     public static void error(String msg) {
