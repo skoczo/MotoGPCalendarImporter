@@ -62,7 +62,8 @@ public class ListOfRacesActivity extends AppCompatActivity {
                 finish();
             }
 
-            title.setText(titleStr.toString());
+//            title.setText(titleStr.toString());
+            title.setText((getString(R.string.main_title)));
 
 
             GetEventsTask eventsTask = new GetEventsTask(titleStr.toString().split(" ")[1]);

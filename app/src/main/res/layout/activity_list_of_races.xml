@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
+        android:src="@mipmap/dots"
         app:fabSize="normal"
-        app:layout_anchorGravity="bottom|right|end"
-        android:src="@android:drawable/ic_media_play"/>
+        app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>

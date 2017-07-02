@@ -106,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Deminder delay (min)" />
+                            android:text="@string/reminder_delay" />
 
                         <EditText
                             android:id="@+id/delay_val"
@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:src="@android:drawable/ic_media_play"
+        android:src="@mipmap/add"
         app:fabSize="normal"
         app:layout_anchorGravity="bottom|right|end" />
 

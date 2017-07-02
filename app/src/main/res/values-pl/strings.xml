@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">MotoGP calendar importer</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">MotoGP import do kalendarza</string>
+    <string name="title_activity_main">Lista wyścigów</string>
     <string name="splash_message">Pobieranie wyścigów</string>
     <string name="select_categories">Wybierz kategorię</string>
     <string name="events_loaded">Wydażenia utworzone w kalendarzu</string>
@@ -13,4 +13,6 @@
     <string name="event_add_success_msg">Wydarzenia dodane poprawnie</string>
     <string name="cant_connect_to_the_page">Nie mogę połączyć się ze stroną</string>
     <string name="event_build_error">Nie udało się zbudować eventa</string>
+    <string name="main_title">MotoGp 2017 wyścigi</string>
+    <string name="reminder_delay">Przypomnij wcześniej (min)</string>
 </resources>

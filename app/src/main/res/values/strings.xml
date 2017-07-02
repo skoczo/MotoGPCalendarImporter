@@ -13,4 +13,6 @@
     <string name="event_add_success_msg">Events loaded succesfully</string>
     <string name="cant_connect_to_the_page">Can\'t download races</string>
     <string name="event_build_error">Can\'t build events</string>
+    <string name="main_title">MotoGp 2017 races</string>
+    <string name="reminder_delay">Remind me earlier (min)</string>
 </resources>

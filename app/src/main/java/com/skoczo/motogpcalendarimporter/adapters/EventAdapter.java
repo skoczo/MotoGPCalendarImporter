@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.skoczo.motogpcalendarimporter.entities.MotoEvent;
 import com.skoczo.motogpcalendarimporter.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<MotoEvent> {
 
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private final Activity context;
     private final List<MotoEvent> data;
     private final Date currentDate;
@@ -54,8 +56,9 @@ public class EventAdapter extends ArrayAdapter<MotoEvent> {
         TextView eventText = (TextView) rowView.findViewById(R.id.event_name);
         TextView eventLocation = (TextView) rowView.findViewById(R.id.event_location);
 
+
+        eventLocation.setText(event.getLocation() + " (" + sdf.format(event.getDate()) + ")" );
         eventText.setText(event.getName());
-        eventLocation.setText(event.getLocation());
 
         return rowView;
     }
