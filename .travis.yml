@@ -28,3 +28,7 @@ android:
     - sys-img-armeabi-v7a-android-19ta
     - sys-img-armeabi-v7a-android-22
     - sys-img-armeabi-v7a-android-26
+
+install:
+    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
