@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.skoczo.motogpcalendarimporter.adapters.CalendarAdapter;
 import com.skoczo.motogpcalendarimporter.entities.CalendarEntry;
 import com.skoczo.motogpcalendarimporter.async.EventToCalendarLoader;
@@ -43,12 +45,17 @@ public class CategorySelectionActivity extends AppCompatActivity {
     };
     private CalendarAdapter calAdapter;
     private ListView calendarsList;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_selection);
 
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        
         Cursor cur = null;
         ContentResolver cr = getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
@@ -146,5 +153,17 @@ public class CategorySelectionActivity extends AppCompatActivity {
                 ((CheckBox) findViewById(R.id.moto3_checkbox)).isChecked();
     }
 
+    @Override
+    protected void onResume() {
+        mAdView.resume();
 
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+
+        super.onPause();
+    }
 }

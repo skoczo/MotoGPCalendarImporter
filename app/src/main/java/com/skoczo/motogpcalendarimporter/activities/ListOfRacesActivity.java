@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.skoczo.motogpcalendarimporter.ErrorSupport;
 import com.skoczo.motogpcalendarimporter.adapters.EventAdapter;
 import com.skoczo.motogpcalendarimporter.async.GetMotoGPCalendar;
@@ -25,13 +28,25 @@ import java.util.ArrayList;
 
 public class ListOfRacesActivity extends AppCompatActivity {
 
+    public final static String APP_ID = "ca-app-pub-0659010952198256~3902225502";
+    public final static String COMMERCIAL_ID = "ca-app-pub-0659010952198256/5378958706";
+    public final static String FULL_COMMERCIAL_ID = "ca-app-pub-0659010952198256/9669557501";
+
     private ArrayList<MotoEvent> events;
     private ArrayAdapter<MotoEvent> adapter;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_races);
+
+        MobileAds.initialize(this, ListOfRacesActivity.APP_ID);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         TextView title = (TextView) findViewById(R.id.title);
 
@@ -85,5 +100,19 @@ public class ListOfRacesActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page,Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        mAdView.resume();
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+
+        super.onPause();
     }
 }
