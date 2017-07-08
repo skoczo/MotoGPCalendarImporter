@@ -21,14 +21,10 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-19
-    - addon-google_apis-google-19
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-19ta
-    - sys-img-armeabi-v7a-android-22
-    - sys-img-armeabi-v7a-android-26
+    #- sys-img-armeabi-v7a-android-19ta
+    #- sys-img-armeabi-v7a-android-22
+    #- sys-img-armeabi-v7a-android-26
 
-install:
-    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
-    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
