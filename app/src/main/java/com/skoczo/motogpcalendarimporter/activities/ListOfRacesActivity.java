@@ -43,7 +43,7 @@ public class ListOfRacesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_races);
 
         mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("4B4E791193D432168AB081047D7262E1").build();
         mAdView.loadAd(adRequest);
 
         MobileAds.initialize(this, ListOfRacesActivity.APP_ID);

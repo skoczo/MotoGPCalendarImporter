@@ -16,4 +16,5 @@
     <string name="main_title">MotoGp 2017 races</string>
     <string name="reminder_delay">Remind me earlier (min)</string>
     <string name="no_internet">No internet connection</string>
+    <string name="commercial">ca-app-pub-0659010952198256/5378958706</string>
 </resources>
