@@ -21,6 +21,7 @@ import com.skoczo.motogpcalendarimporter.async.GetEventsTask;
 import com.skoczo.motogpcalendarimporter.async.GetTitleTask;
 import com.skoczo.motogpcalendarimporter.entities.MotoEvent;
 import com.skoczo.motogpcalendarimporter.R;
+import com.skoczo.motogpcalendarimporter.utility.Utility;
 
 import org.jsoup.nodes.Document;
 
@@ -41,64 +42,69 @@ public class ListOfRacesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_races);
 
-        MobileAds.initialize(this, ListOfRacesActivity.APP_ID);
-
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        MobileAds.initialize(this, ListOfRacesActivity.APP_ID);
 
-        TextView title = (TextView) findViewById(R.id.title);
+        if (!Utility.isNetworkAvailable(this)) {
+            Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+            finishAffinity();
+        } else {
 
-        ((FloatingActionButton)findViewById(R.id.go_to_category_selection)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(ListOfRacesActivity.this, CategorySelectionActivity.class);
+            TextView title = (TextView) findViewById(R.id.title);
 
-                myIntent.putExtra("events", events);
-                startActivity(myIntent);
-            }
-        });
+            ((FloatingActionButton) findViewById(R.id.go_to_category_selection)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(ListOfRacesActivity.this, CategorySelectionActivity.class);
 
-        GetTitleTask titlePage = new GetTitleTask("http://www.motogp.com/en/calendar/");
-        try {
-            Document calDoc = (Document)(new GetMotoGPCalendar()).execute().get();
-            if(calDoc == null) {
-                Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page,Toast.LENGTH_SHORT).show();
-                Log.e(getClass().getName(), "Can't connect to the page");
-                finish();
-            }
+                    myIntent.putExtra("events", events);
+                    startActivity(myIntent);
+                }
+            });
 
-            Object titleStr = titlePage.execute(calDoc).get();
+            GetTitleTask titlePage = new GetTitleTask("http://www.motogp.com/en/calendar/");
+            try {
+                Document calDoc = (Document) (new GetMotoGPCalendar()).execute().get();
+                if (calDoc == null) {
+                    Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page, Toast.LENGTH_SHORT).show();
+                    Log.e(getClass().getName(), "Can't connect to the page");
+                    finish();
+                }
 
-            if(titleStr == null) {
-                Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page,Toast.LENGTH_SHORT).show();
-                Log.e(getClass().getName(), "Can't connect to the page");
-                finish();
-            }
+                Object titleStr = titlePage.execute(calDoc).get();
+
+                if (titleStr == null) {
+                    Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page, Toast.LENGTH_SHORT).show();
+                    Log.e(getClass().getName(), "Can't connect to the page");
+                    finish();
+                }
 
 //            title.setText(titleStr.toString());
-            title.setText((getString(R.string.main_title)));
+                title.setText((getString(R.string.main_title)));
 
 
-            GetEventsTask eventsTask = new GetEventsTask(titleStr.toString().split(" ")[1]);
-            events = (ArrayList<MotoEvent>)eventsTask.execute(calDoc).get();
+                GetEventsTask eventsTask = new GetEventsTask(titleStr.toString().split(" ")[1]);
+                events = (ArrayList<MotoEvent>) eventsTask.execute(calDoc).get();
 
-            if(events == null) {
-                Toast.makeText(getApplicationContext(), R.string.event_build_error, Toast.LENGTH_LONG).show();
-                ErrorSupport.error("Can't build events");
+                if (events == null) {
+                    Toast.makeText(getApplicationContext(), R.string.event_build_error, Toast.LENGTH_LONG).show();
+                    ErrorSupport.error("Can't build events");
+                    finish();
+                }
+
+                ListView eventList = (ListView) findViewById(R.id.events_list);
+
+                adapter = new EventAdapter(this, events);
+                eventList.setAdapter(adapter);
+
+            } catch (Exception e) {
+                Log.e(getClass().getName(), e.getMessage());
+                Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page, Toast.LENGTH_SHORT).show();
                 finish();
             }
-
-            ListView eventList = (ListView) findViewById(R.id.events_list);
-
-            adapter = new EventAdapter(this, events);
-            eventList.setAdapter(adapter);
-
-        } catch (Exception e) {
-            Log.e(getClass().getName(), e.getMessage());
-            Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page,Toast.LENGTH_SHORT).show();
-            finish();
         }
     }
 
