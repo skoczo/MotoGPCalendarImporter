@@ -67,7 +67,7 @@ public class ListOfRacesActivity extends AppCompatActivity {
 
             GetTitleTask titlePage = new GetTitleTask("http://www.motogp.com/en/calendar/");
             try {
-                Document calDoc = (Document) (new GetMotoGPCalendar()).execute().get();
+                Document calDoc = (Document) (new GetMotoGPCalendar(getApplicationContext())).execute().get();
                 if (calDoc == null) {
                     Toast.makeText(getApplicationContext(), R.string.cant_connect_to_the_page, Toast.LENGTH_SHORT).show();
                     Log.e(getClass().getName(), "Can't connect to the page");
@@ -86,12 +86,12 @@ public class ListOfRacesActivity extends AppCompatActivity {
                 title.setText((getString(R.string.main_title)));
 
 
-                GetEventsTask eventsTask = new GetEventsTask(titleStr.toString().split(" ")[1]);
+                GetEventsTask eventsTask = new GetEventsTask(titleStr.toString().split(" ")[1], getApplicationContext());
                 events = (ArrayList<MotoEvent>) eventsTask.execute(calDoc).get();
 
                 if (events == null) {
                     Toast.makeText(getApplicationContext(), R.string.event_build_error, Toast.LENGTH_LONG).show();
-                    ErrorSupport.error("Can't build events");
+                    ErrorSupport.error("Can't build events", getApplicationContext());
                     finish();
                 }
 

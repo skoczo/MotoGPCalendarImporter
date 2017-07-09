@@ -1,5 +1,6 @@
 package com.skoczo.motogpcalendarimporter.async;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.skoczo.motogpcalendarimporter.ErrorSupport;
@@ -14,13 +15,19 @@ import java.io.IOException;
  */
 
 public class GetMotoGPCalendar extends AsyncTask {
+
+    private final Context ctx;
+
+    public GetMotoGPCalendar(Context ctx)
+    {this.ctx = ctx;}
+
     @Override
     protected Document doInBackground(Object[] params) {
         try {
             return Jsoup.connect("http://www.motogp.com/en/calendar/").get();
         } catch (IOException e) {
             // TODO
-            ErrorSupport.error("Error during calendar getting " + e.getMessage(), e);
+            ErrorSupport.error("Error during calendar getting " + e.getMessage(), e, ctx);
         }
 
         return null;

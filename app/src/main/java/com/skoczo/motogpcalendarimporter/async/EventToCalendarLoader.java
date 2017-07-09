@@ -98,7 +98,7 @@ public class EventToCalendarLoader extends AsyncTask {
             }
         } catch (Exception e) {
             Toast.makeText(activity.getApplicationContext(), R.string.event_add_error_msg, Toast.LENGTH_LONG).show();
-            ErrorSupport.error("Error during appintment add", e);
+            ErrorSupport.error("Error during appintment add", e,activity.getApplicationContext());
             return false;
         } finally {
             progDial.dismiss();

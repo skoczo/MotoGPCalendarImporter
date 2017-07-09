@@ -1,5 +1,6 @@
 package com.skoczo.motogpcalendarimporter.async;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.skoczo.motogpcalendarimporter.ErrorSupport;
@@ -23,10 +24,12 @@ import java.util.Locale;
 
 public class GetEventsTask extends AsyncTask {
     private final String year;
+    private final Context ctx;
     private Date currentDate;
 
-    public GetEventsTask(String year) {
+    public GetEventsTask(String year, Context ctx) {
         this.year = year;
+        this.ctx = ctx;
         currentDate = Calendar.getInstance().getTime();
     }
 
@@ -48,7 +51,7 @@ public class GetEventsTask extends AsyncTask {
 
             return eventsList;
         } catch (Exception e) {
-            ErrorSupport.error("Error during event build: " + e.getMessage(), e);
+            ErrorSupport.error("Error during event build: " + e.getMessage(), e,ctx);
         }
 
 
@@ -83,7 +86,7 @@ public class GetEventsTask extends AsyncTask {
         Elements elements = e.getElementsByClass(event_day);
 
         if(elements.size() == 0 || elements.size() > 1) {
-            ErrorSupport.error("Error during event parse");
+            ErrorSupport.error("Error during event parse",ctx);
         }
 
         return elements.text();
