@@ -16,4 +16,5 @@
     <string name="main_title">MotoGp 2017 wyścigi</string>
     <string name="reminder_delay">Przypomnij wcześniej (min)</string>
     <string name="no_internet">Brak połączenia z internetem</string>
+    <string name="commercial">ca-app-pub-0659010952198256/5378958706</string>
 </resources>
