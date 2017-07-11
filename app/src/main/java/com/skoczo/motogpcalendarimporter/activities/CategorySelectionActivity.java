@@ -25,6 +25,7 @@ import com.skoczo.motogpcalendarimporter.entities.CalendarEntry;
 import com.skoczo.motogpcalendarimporter.async.EventToCalendarLoader;
 import com.skoczo.motogpcalendarimporter.entities.MotoEvent;
 import com.skoczo.motogpcalendarimporter.R;
+import com.skoczo.motogpcalendarimporter.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,9 +53,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_selection);
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("4B4E791193D432168AB081047D7262E1").build();
-        mAdView.loadAd(adRequest);
+        mAdView = Utility.addCommercials((AdView) findViewById(R.id.adView));
         
         Cursor cur = null;
         ContentResolver cr = getContentResolver();
@@ -155,14 +154,14 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mAdView.resume();
+        if(mAdView!=null)mAdView.resume();
 
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        mAdView.pause();
+        if(mAdView!=null)mAdView.pause();
 
         super.onPause();
     }

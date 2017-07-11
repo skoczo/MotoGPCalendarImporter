@@ -8,6 +8,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.skoczo.motogpcalendarimporter.R;
+import com.skoczo.motogpcalendarimporter.utility.Utility;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,9 +25,7 @@ public class SplashActivity extends AppCompatActivity {
 
         MobileAds.initialize(this, ListOfRacesActivity.APP_ID);
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("4B4E791193D432168AB081047D7262E1").build();
-        mAdView.loadAd(adRequest);
+        mAdView = Utility.addCommercials((AdView) findViewById(R.id.adView));
 
         Timer RunSplash = new Timer();
 
@@ -50,14 +49,14 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mAdView.resume();
+        if(mAdView!=null)mAdView.resume();
 
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        mAdView.pause();
+        if(mAdView!=null)mAdView.pause();
 
         super.onPause();
     }

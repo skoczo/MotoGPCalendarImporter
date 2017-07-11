@@ -42,9 +42,7 @@ public class ListOfRacesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_races);
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("4B4E791193D432168AB081047D7262E1").build();
-        mAdView.loadAd(adRequest);
+        mAdView = Utility.addCommercials((AdView) findViewById(R.id.adView));
 
         MobileAds.initialize(this, ListOfRacesActivity.APP_ID);
 
@@ -110,14 +108,14 @@ public class ListOfRacesActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mAdView.resume();
+        if(mAdView!=null)mAdView.resume();
 
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        mAdView.pause();
+        if(mAdView!=null)mAdView.pause();
 
         super.onPause();
     }
