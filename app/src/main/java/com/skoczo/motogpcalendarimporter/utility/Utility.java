@@ -26,7 +26,7 @@ public class Utility {
         if(!isCommercial)
             return null;
 
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("4B4E791193D432168AB081047D7262E1").build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("4B4E791193D432168AB081047D7262E1").addTestDevice("AE39FB318BB3859940C843793601F26E").build();
         adView.loadAd(adRequest);
 
         return adView;

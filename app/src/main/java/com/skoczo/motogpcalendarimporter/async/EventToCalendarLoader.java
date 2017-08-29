@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * Created by skoczo on 23.06.17.
@@ -45,6 +46,13 @@ public class EventToCalendarLoader extends AsyncTask {
             for (MotoEvent e : events) {
                 Document doc = Jsoup.connect(e.getEventUrl()).get();
                 Elements raceDays = doc.getElementsByClass("c-schedule__table");
+                Elements offsetElement = doc.getElementsByClass("c-schedule__time radio active");
+                String offset = null;
+                if(offsetElement.size() > 0) {
+                    offset = offsetElement.get(i).text();
+                    offset = offset.substring(offset.indexOf("(")+1, offset.length()-1);
+                    offset= offset.replace(" ", "");
+                }
 
                 for (int dayCount = 0; dayCount < raceDays.size(); dayCount++) {
                     Element raceDay = raceDays.get(dayCount);
@@ -67,15 +75,15 @@ public class EventToCalendarLoader extends AsyncTask {
                             // create event
                             String[] startEnd = hours.split(" - ");
                             String[] startHours = startEnd[0].split(":");
-
                             String[] endHours = null;
-                            if (startEnd.length > 1) {
+
+                            if(startEnd.length > 1) {
                                 endHours = startEnd[1].split(":");
                             }
 
                             currentDayCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startHours[0]));
                             currentDayCal.set(Calendar.MINUTE, Integer.parseInt(startHours[1]));
-
+                            currentDayCal.setTimeZone(TimeZone.getTimeZone(offset));
                             Date startDate = currentDayCal.getTime();
 
                             if (endHours == null) {
@@ -88,7 +96,14 @@ public class EventToCalendarLoader extends AsyncTask {
 
                             Date endDate = currentDayCal.getTime();
 
-                            pushAppointmentsToCalender(activity, category + ": " + title, e.getName(), e.getLocation(), startDate.getTime(), endDate.getTime(), 15);
+                            pushAppointmentsToCalender(activity,
+                                    category + ": " + title,
+                                    e.getName(),
+                                    e.getLocation(),
+                                    startDate.getTime(),
+                                    endDate.getTime(),
+                                    15,
+                                    offset);
                         }
                     }
 
@@ -97,7 +112,13 @@ public class EventToCalendarLoader extends AsyncTask {
                 progDial.setProgress(++i);
             }
         } catch (Exception e) {
-            Toast.makeText(activity.getApplicationContext(), R.string.event_add_error_msg, Toast.LENGTH_LONG).show();
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity.getApplicationContext(), R.string.event_add_error_msg, Toast.LENGTH_LONG).show();
+                }
+            });
+
             ErrorSupport.error("Error during appintment add", e,activity.getApplicationContext());
             return false;
         } finally {
@@ -115,7 +136,8 @@ public class EventToCalendarLoader extends AsyncTask {
         return true;
     }
 
-    public static long pushAppointmentsToCalender(Activity curActivity, String title, String addInfo, String place, long startDate, long endDate, int reminder) {
+    public static long pushAppointmentsToCalender(Activity curActivity, String title, String addInfo, String place,
+                                                  long startDate, long endDate, int reminder, String tz) {
         String eventUriString = "content://com.android.calendar/events";
         ContentValues eventValues = new ContentValues();
 
@@ -126,7 +148,6 @@ public class EventToCalendarLoader extends AsyncTask {
         eventValues.put("dtstart", startDate);
         eventValues.put("dtend", endDate);
         eventValues.put("eventStatus", 1);
-
         eventValues.put("eventTimezone", Calendar.getInstance().getTimeZone().getID());
 
         eventValues.put("hasAlarm", 1); // 0 for false, 1 for true

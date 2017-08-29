@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
 
-        RunSplash.schedule(ShowSplash, 5000);
+        RunSplash.schedule(ShowSplash, 1000);
     }
 
     @Override
