@@ -33,8 +33,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CategorySelectionActivity extends AppCompatActivity {
-
-    private ArrayList<CalendarEntry> calendars;
     private ArrayList<MotoEvent> events;
     private ProgressDialog progressDialog;
     private EventToCalendarLoader loader;
@@ -59,18 +57,26 @@ public class CategorySelectionActivity extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
         cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
-        calendars = new ArrayList<>();
+        CalendarEntry calendar = null;
+
+        int PROJECTION_ID_INDEX = 0;
 
         while (cur.moveToNext()) {
+            Log.i(getClass().getName(), Long.toString(cur.getLong(PROJECTION_ID_INDEX)));
             Log.i(getClass().getName(), cur.getString(1));
             Log.i(getClass().getName(), cur.getString(2));
             Log.i(getClass().getName(), cur.getString(3));
             Log.i(getClass().getName(), "----------------");
 
-            calendars.add(new CalendarEntry(cur.getString(1), cur.getString(2), cur.getString(3)));
+            CalendarEntry entry = new CalendarEntry(cur.getLong(PROJECTION_ID_INDEX),cur.getString(1), cur.getString(2), cur.getString(3));
+            if(entry.isDefault()) {
+                calendar = entry;
+                break;
+            }
         }
 
-        calAdapter = new CalendarAdapter(this, calendars);
+        final CalendarEntry defaultCalendar = calendar;
+//        calAdapter = new CalendarAdapter(this, calendars);
 
         events = (ArrayList<MotoEvent>) getIntent().getExtras().get("events");
 //        calendarsList = (ListView) findViewById(R.id.calendars);
@@ -106,7 +112,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
 
                     loader = new EventToCalendarLoader(events, CategorySelectionActivity.this);
-                    loader.execute(progressDialog, CategorySelectionActivity.this, categorySelectedSet());
+                    loader.execute(progressDialog, CategorySelectionActivity.this, categorySelectedSet(), defaultCalendar);
 
                 } else {
                     runOnUiThread(new Runnable() {

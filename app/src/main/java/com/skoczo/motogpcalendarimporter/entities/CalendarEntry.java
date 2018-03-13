@@ -5,37 +5,37 @@ package com.skoczo.motogpcalendarimporter.entities;
  */
 
 public class CalendarEntry {
+    private final long calendarID;
     private String accountName;
     private String displayName;
     private String ownerAccount;
 
-    public CalendarEntry(String accountName, String displayName, String ownerAccount) {
+    public CalendarEntry(long calendarID, String accountName, String displayName, String ownerAccount) {
+        this.calendarID = calendarID;
         this.accountName = accountName;
         this.displayName = displayName;
         this.ownerAccount = ownerAccount;
+    }
+
+    public boolean isDefault() {
+        return accountName.equals(ownerAccount) && displayName.equals(accountName);
     }
 
     public String getAccountName() {
         return accountName;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public long getCalendarID() {
+        return calendarID;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
 
     public String getOwnerAccount() {
         return ownerAccount;
     }
 
-    public void setOwnerAccount(String ownerAccount) {
-        this.ownerAccount = ownerAccount;
-    }
 }

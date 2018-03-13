@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.skoczo.motogpcalendarimporter.ErrorSupport;
 import com.skoczo.motogpcalendarimporter.R;
+import com.skoczo.motogpcalendarimporter.entities.CalendarEntry;
 import com.skoczo.motogpcalendarimporter.entities.MotoEvent;
 
 import org.jsoup.Jsoup;
@@ -40,6 +41,7 @@ public class EventToCalendarLoader extends AsyncTask {
         final ProgressDialog progDial = (ProgressDialog) params[0];
         final Activity activity = ((Activity) params[1]);
         final Set<String> selectedCategories = (Set<String>) params[2];
+        final CalendarEntry calendar = (CalendarEntry) params[3];
 
         int i = 0;
         try {
@@ -103,7 +105,8 @@ public class EventToCalendarLoader extends AsyncTask {
                                     startDate.getTime(),
                                     endDate.getTime(),
                                     15,
-                                    offset);
+                                    offset,
+                                    calendar);
                         }
                     }
 
@@ -137,11 +140,15 @@ public class EventToCalendarLoader extends AsyncTask {
     }
 
     public static long pushAppointmentsToCalender(Activity curActivity, String title, String addInfo, String place,
-                                                  long startDate, long endDate, int reminder, String tz) {
+                                                  long startDate, long endDate, int reminder, String tz, CalendarEntry calendar) {
         String eventUriString = "content://com.android.calendar/events";
         ContentValues eventValues = new ContentValues();
 
-        eventValues.put("calendar_id", 1);
+        if(calendar != null) {
+            eventValues.put("calendar_id", calendar.getCalendarID());
+        } else {
+            eventValues.put("calendar_id", 1);
+        }
         eventValues.put("title", title);
         eventValues.put("description", addInfo);
         eventValues.put("eventLocation", place);

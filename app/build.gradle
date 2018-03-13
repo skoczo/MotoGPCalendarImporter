@@ -7,8 +7,8 @@ android {
         applicationId "com.skoczo.motogpcalendarimporter"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 1_1
-        versionName "1.1"
+        versionCode 1_2
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
