@@ -51,7 +51,7 @@ public class EventToCalendarLoader extends AsyncTask {
                 Elements offsetElement = doc.getElementsByClass("c-schedule__time radio active");
                 String offset = null;
                 if(offsetElement.size() > 0) {
-                    offset = offsetElement.get(i).text();
+                    offset = offsetElement.get(0).text();
                     offset = offset.substring(offset.indexOf("(")+1, offset.length()-1);
                     offset= offset.replace(" ", "");
                 }
